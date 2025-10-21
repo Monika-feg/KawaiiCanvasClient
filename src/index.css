@@ -3,8 +3,6 @@
   line-height: 1.5;
   font-weight: 400;
   color-scheme: light dark;
-  background: linear-gradient(135deg, oklch(74.6% 0.16 232.661), oklch(82.7% 0.119 306.383));
-  color: oklch(70.4% 0.191 22.216);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -13,11 +11,10 @@
 
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
   min-width: 320px;
   min-height: 100vh;
-  
+  background: linear-gradient(135deg, oklch(74.6% 0.16 232.661), oklch(82.7% 0.119 306.383));
+  color: oklch(70.4% 0.191 22.216);
 }
 
 h1 {
