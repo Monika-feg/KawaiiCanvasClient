@@ -1,0 +1,24 @@
+
+.navbar {
+    background-color: oklch(90% 0.05 250);
+    padding: 1rem 2rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 50px;
+}
+
+.navbar .navbar-brand {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: oklch(55.8% 0.288 302.321);
+}
+
+.navbar .nav-link {
+    font-size: 1.1rem;
+    color: oklch(65.6% 0.241 354.308);
+    margin-right: 1rem;
+    transition: color 0.3s;
+}
+
+.navbar .nav-link:hover {
+    color: oklch(45.3% 0.35 280.123);
+}
