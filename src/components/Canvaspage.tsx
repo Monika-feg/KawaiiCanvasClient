@@ -4,7 +4,7 @@ import Card from "react-bootstrap/Card";
 import Container from "react-bootstrap/esm/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import { fetchGetAllCanvas, fetchGetCanvasById } from "../utils/CanvasApi";
+import { fetchGetAllCanvas } from "../utils/CanvasApi";
 import type { Canvas } from "../utils/Interfaces";
 import "../components/css/Canvas.css";
 import { fetchAddCanvasToCart } from "../utils/CartApi";
