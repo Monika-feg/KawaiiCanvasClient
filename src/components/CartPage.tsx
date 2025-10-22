@@ -8,6 +8,8 @@ import type { Cart } from "../utils/Interfaces";
 import { getCartIdFromCookie } from "../utils/CartFromCookie";
 import Container from "react-bootstrap/esm/Container";
 import Row from "react-bootstrap/esm/Row";
+import "../components/css/Cart.css";
+import OrderPage from "./OrderPage";
 
 function CartPage() {
   const [cart, setCart] = useState<Cart | null>(null);
@@ -88,15 +90,21 @@ function CartPage() {
       <div>
         <h2>Kundvagn</h2>
       </div>
+      <hr className="cart-divider" />
       <div>
         <Container>
           <Row>
             {cart && cart.canvases && cart.canvases.length > 0 ? (
               cart.canvases.map((item) => (
-                <div key={item.id}>
-                  <h3>{item.title}</h3>
-                  <p>Price: {item.price} kr</p>
-                  <button onClick={() => handleDelete(item.id)}>X</button>
+                <div key={item.id} className="cart-item-row">
+                  <h3 className="cart-item-title">{item.title}</h3>
+                  <p className="cart-item-price">Price: {item.price} kr</p>
+                  <button
+                    className="cart-item-remove"
+                    onClick={() => handleDelete(item.id)}
+                  >
+                    X
+                  </button>
                 </div>
               ))
             ) : (
@@ -104,10 +112,15 @@ function CartPage() {
             )}
           </Row>
         </Container>
+        <hr className="cart-divider" />
         <div>
           <p>Fraktkostnad: 49Kr över 200 kr fraktfritt </p>
           <h2>Totalpris:{totalPrice} kr</h2>
         </div>
+      </div>
+      <hr className="cart-divider" />
+      <div>
+        <OrderPage />
       </div>
     </>
   );
