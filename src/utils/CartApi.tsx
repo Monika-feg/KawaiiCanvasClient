@@ -45,3 +45,22 @@ export async function fetchGetCartById(id: string) {
     throw error;
   }
 }
+
+// ta bort en canvas från kundvagnen
+export async function fetchRemoveCanvasFromCart(
+  cartId: string,
+  canvasId: string
+) {
+  try {
+    const rep = await axios.delete<KawaiiResponse<Cart>>(
+      `${BASE_URL}/${cartId}/canvas/${canvasId}`,
+      {
+        withCredentials: true,
+      }
+    );
+    return rep.data.data;
+  } catch (error) {
+    console.error("Error removing canvas from cart:", error);
+    throw error;
+  }
+}

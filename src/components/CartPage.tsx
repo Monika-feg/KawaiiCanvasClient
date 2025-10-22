@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { fetchGetCartById } from "../utils/CartApi";
+import { fetchGetCartById, fetchRemoveCanvasFromCart } from "../utils/CartApi";
 import type { Cart } from "../utils/Interfaces";
 import { getCartIdFromCookie } from "../utils/CartFromCookie";
 import Container from "react-bootstrap/esm/Container";
@@ -45,8 +45,26 @@ function CartPage() {
     );
   }
 
-  // Debug-logg: visa vad cart innehåller
-  console.log("Cart från backend:", cart);
+  const handleDelete = (canvasId: string) => {
+    console.log("Klickar på delete knappen");
+    fetchRemoveCanvasFromCart(cart!.id, canvasId)
+      .then(() => {
+        // Ta bort den borttagna canvasen från state
+        setCart((prevCart) => {
+          if (!prevCart) return null;
+          return {
+            ...prevCart,
+            canvases: prevCart.canvases
+              ? prevCart.canvases.filter((c) => c.id !== canvasId)
+              : [],
+          };
+        });
+      })
+      .catch(() => {
+        setError("Kunde inte ta bort tavlan från kundvagnen.");
+      });
+  };
+
   return (
     <>
       <div>
@@ -60,6 +78,7 @@ function CartPage() {
                 <div key={item.id}>
                   <h3>{item.title}</h3>
                   <p>Price: {item.price} kr</p>
+                  <button onClick={() => handleDelete(item.id)}>X</button>
                 </div>
               ))
             ) : (
