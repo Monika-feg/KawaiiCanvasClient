@@ -12,3 +12,13 @@ export async function fetchGetAllCanvas() {
     throw error;
   }
 }
+
+export async function fetchGetCanvasById(id: string) {
+  try {
+    const rep = await axios.get<KawaiiResponse<Canvas>>(`${BASE_URL}/${id}`);
+    return rep.data.data;
+  } catch (error) {
+    console.error("Error fetching canvas by ID:", error);
+    throw error;
+  }
+}

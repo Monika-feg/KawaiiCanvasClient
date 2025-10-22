@@ -4,9 +4,11 @@ import Card from "react-bootstrap/Card";
 import Container from "react-bootstrap/esm/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import { fetchGetAllCanvas } from "../utils/CanvasApi";
+import { fetchGetAllCanvas, fetchGetCanvasById } from "../utils/CanvasApi";
 import type { Canvas } from "../utils/Interfaces";
 import "../components/css/Canvas.css";
+import { fetchAddCanvasToCart } from "../utils/CartApi";
+import { getCartIdFromCookie } from "../utils/CartFromCookie";
 
 const imageUrl = [
   "https://res.cloudinary.com/dlhqajdjy/image/upload/v1760453935/ai-generated-8362469_640_p1gtnz.png",
@@ -20,7 +22,15 @@ function CanvasPage() {
   const [products, setProducts] = useState<Canvas[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [cartId, setCartId] = useState<string>("");
 
+  // hämtar cartId från cookie
+  useEffect(() => {
+    const id = getCartIdFromCookie();
+    if (id) setCartId(id);
+  }, []);
+
+  // hämtar tavlor från backend
   useEffect(() => {
     try {
       fetchGetAllCanvas().then((data) => {
@@ -49,10 +59,20 @@ function CanvasPage() {
     );
   }
 
-  const handleAddToCart = () => {
+  const handleAddToCart = (canvasId: string) => {
     console.log(" Klick på mig! ");
     // det är här websocket ska anroppas
     // flytta till kundvagnen
+    if (!cartId) {
+      console.log("Ingen kundvagn hittades. " + cartId);
+      return;
+    }
+    fetchAddCanvasToCart(cartId, canvasId)
+      .then(() => alert("Tavla tillagd i kundvagnen!"))
+      .catch((error) => {
+        console.error("Error adding canvas to cart:", error);
+        alert("Kunde inte lägga till tavlan i kundvagnen.");
+      });
   };
 
   return (
@@ -65,7 +85,10 @@ function CanvasPage() {
               <Card.Body className="card-body">
                 <Card.Title>{p.title}</Card.Title>
                 <Card.Text>{p.price}</Card.Text>
-                <Button className="canvas-button" onClick={handleAddToCart}>
+                <Button
+                  className="canvas-button"
+                  onClick={() => handleAddToCart(p.id)}
+                >
                   Lägg i varukorgen
                 </Button>
               </Card.Body>
