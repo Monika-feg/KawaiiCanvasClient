@@ -32,3 +32,16 @@ export async function fetchAddCanvasToCart(cartId: string, canvasId: string) {
     throw error;
   }
 }
+
+// hämtar kundvagnen med dess innehåll
+export async function fetchGetCartById(id: string) {
+  try {
+    const rep = await axios.get<KawaiiResponse<Cart>>(`${BASE_URL}/${id}`, {
+      withCredentials: true,
+    });
+    return rep.data.data;
+  } catch (error) {
+    console.error("Error fetching cart by ID:", error);
+    throw error;
+  }
+}
