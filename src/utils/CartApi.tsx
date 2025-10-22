@@ -64,3 +64,19 @@ export async function fetchRemoveCanvasFromCart(
     throw error;
   }
 }
+
+// totalpris för kundvagnen
+export async function fetchGetCartTotalPrice(cartId: string) {
+  try {
+    const rep = await axios.get<KawaiiResponse<number>>(
+      `${BASE_URL}/${cartId}/totalPrice`,
+      {
+        withCredentials: true,
+      }
+    );
+    return rep.data.data;
+  } catch (error) {
+    console.error("Error fetching cart total price:", error);
+    throw error;
+  }
+}
