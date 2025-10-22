@@ -1,5 +1,9 @@
 import { useEffect, useState } from "react";
-import { fetchGetCartById, fetchRemoveCanvasFromCart } from "../utils/CartApi";
+import {
+  fetchGetCartById,
+  fetchGetCartTotalPrice,
+  fetchRemoveCanvasFromCart,
+} from "../utils/CartApi";
 import type { Cart } from "../utils/Interfaces";
 import { getCartIdFromCookie } from "../utils/CartFromCookie";
 import Container from "react-bootstrap/esm/Container";
@@ -9,6 +13,7 @@ function CartPage() {
   const [cart, setCart] = useState<Cart | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [totalPrice, setTotalPrice] = useState<number>(0);
 
   useEffect(() => {
     // Här kan du hämta kundvagnens innehåll
@@ -28,6 +33,19 @@ function CartPage() {
       setLoading(false);
     }
   }, []);
+
+  useEffect(() => {
+    if (cart && cart.id) {
+      fetchGetCartTotalPrice(cart.id)
+        .then((totalPrice) => {
+          console.log("Totalpris för kundvagn:", totalPrice);
+          setTotalPrice(totalPrice);
+        })
+        .catch(() => {
+          setError("Kunde inte hämta totalpris för kundvagnen.");
+        });
+    }
+  }, [cart]);
 
   if (loading) {
     return (
@@ -86,6 +104,10 @@ function CartPage() {
             )}
           </Row>
         </Container>
+        <div>
+          <p>Fraktkostnad: 49Kr över 200 kr fraktfritt </p>
+          <h2>Totalpris:{totalPrice} kr</h2>
+        </div>
       </div>
     </>
   );
