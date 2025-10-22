@@ -4,6 +4,7 @@ import CanvasPage from "./components/Canvaspage";
 import CartPage from "./components/CartPage";
 import HomePage from "./components/HomePage";
 import CustomNavbar from "./components/Navbar";
+import Footer from "./components/Footer";
 function App() {
   return (
     <>
@@ -18,6 +19,7 @@ function App() {
             </Routes>
           </div>
         </div>
+        <Footer />
       </Router>
     </>
   );
