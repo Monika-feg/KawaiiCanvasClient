@@ -1,0 +1,26 @@
+.cart-item-row {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #eee;
+  padding: 1rem 0;
+}
+
+.cart-item-title {
+  flex: 2;
+  margin: 0;
+}
+
+.cart-item-price {
+  flex: 1;
+  margin: 0;
+}
+
+.cart-item-remove {
+  flex: 0;
+  margin-left: 1rem;
+}
+.cart-divider {
+  margin: 1rem 0;
+  border: none;
+  border-top: 2px solid #eee;
+}
