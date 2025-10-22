@@ -7,8 +7,13 @@ export interface Canvas {
   imageUrl?: string;
 }
 
-export interface KawwaiResponce<T>{
+export interface KawaiiResponse<T>{
     status: string;
     message: string;
     data: T;
+}
+
+export interface Cart{
+    id: string;
+    canvas?: Canvas[];
 }
