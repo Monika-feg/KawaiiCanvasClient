@@ -15,5 +15,5 @@ export interface KawaiiResponse<T>{
 
 export interface Cart{
     id: string;
-    canvas?: Canvas[];
+    canvases?: Canvas[];
 }
