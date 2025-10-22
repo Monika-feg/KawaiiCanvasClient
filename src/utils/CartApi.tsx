@@ -17,3 +17,18 @@ export async function fetchNewCart() {
     throw error;
   }
 }
+
+// lägger till en canvas i kundvagnen
+export async function fetchAddCanvasToCart(cartId: string, canvasId: string) {
+  try {
+    const rep = await axios.patch<KawaiiResponse<Cart>>(
+      `${BASE_URL}/${cartId}/canvas/${canvasId}`,
+      {},
+      { withCredentials: true }
+    );
+    return rep.data.data;
+  } catch (error) {
+    console.error("Error adding canvas to cart:", error);
+    throw error;
+  }
+}
