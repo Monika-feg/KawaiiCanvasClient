@@ -19,11 +19,12 @@ export async function fetchNewCart() {
 }
 
 // lägger till en canvas i kundvagnen
-export async function fetchAddCanvasToCart(cartId: string, canvasId: string) {
+export async function fetchAddCanvasToCart(cartId: string, canvasId: string, quantity: number=1) {
+   console.log("cartId:", cartId, "canvasId:", canvasId, "quantity:", quantity);
   try {
     const rep = await axios.patch<KawaiiResponse<Cart>>(
-      `${BASE_URL}/${cartId}/canvas/${canvasId}`,
-      {},
+      `${BASE_URL}/${cartId}/canvas/${canvasId}?quantity=${quantity}`,
+      { },
       { withCredentials: true }
     );
     return rep.data.data;
