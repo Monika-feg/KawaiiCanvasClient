@@ -16,7 +16,13 @@ export interface KawaiiResponse<T>{
 // Cart-objektet du får från backend
 export interface Cart {
   id: string;
-  canvases?: Canvas[];
+  items: CartItem[];
+}
+
+export interface CartItem{
+   id: string;
+   numberOfCanvases: number;
+   canvas: Canvas;
 }
 
 // Cart-objektet du skickar till backend (bara id)

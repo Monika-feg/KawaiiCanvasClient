@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import {
+  fetchAddCanvasToCart,
   fetchGetCartById,
   fetchGetCartTotalPrice,
   fetchRemoveCanvasFromCart,
@@ -10,6 +11,9 @@ import Container from "react-bootstrap/esm/Container";
 import Row from "react-bootstrap/esm/Row";
 import "../components/css/Cart.css";
 import OrderPage from "./OrderPage";
+import Col from "react-bootstrap/esm/Col";
+import Button from "react-bootstrap/esm/Button";
+import React from "react";
 
 function CartPage() {
   const [cart, setCart] = useState<Cart | null>(null);
@@ -65,17 +69,32 @@ function CartPage() {
     );
   }
 
+  const updateQuantity = async (canvasId: string, newQuantity: number) => {
+    if (!cart || !cart.id) return;
+    if (newQuantity < 1) return; // Skicka aldrig mindre än 1
+
+    try {
+      const updatedCart = await fetchAddCanvasToCart(
+        cart.id,
+        canvasId,
+        newQuantity
+      );
+      setCart(updatedCart);
+    } catch (error) {
+      alert("Kunde inte uppdatera antal.");
+    }
+  };
+
   const handleDelete = (canvasId: string) => {
     console.log("Klickar på delete knappen");
     fetchRemoveCanvasFromCart(cart!.id, canvasId)
       .then(() => {
-        // Ta bort den borttagna canvasen från state
         setCart((prevCart) => {
           if (!prevCart) return null;
           return {
             ...prevCart,
-            canvases: prevCart.canvases
-              ? prevCart.canvases.filter((c) => c.id !== canvasId)
+            items: prevCart.items
+              ? prevCart.items.filter((c) => c.canvas.id !== canvasId)
               : [],
           };
         });
@@ -90,34 +109,92 @@ function CartPage() {
       <div>
         <h2>Kundvagn</h2>
       </div>
+
       <hr className="cart-divider" />
+
       <div>
         <Container>
           <Row>
-            {cart && cart.canvases && cart.canvases.length > 0 ? (
-              cart.canvases.map((item) => (
-                <div key={item.id} className="cart-item-row">
-                  <h3 className="cart-item-title">{item.title}</h3>
-                  <p className="cart-item-price">Price: {item.price} kr</p>
-                  <button
-                    className="cart-item-remove"
-                    onClick={() => handleDelete(item.id)}
-                  >
-                    X
-                  </button>
-                </div>
+            {cart && cart.items && cart.items.length > 0 ? (
+              cart.items.map((item) => (
+                <React.Fragment key={item.id}>
+                  <Col className="cart-item-row">
+                    <img
+                      src={item.canvas.imageUrl}
+                      alt={item.canvas.title}
+                      width={80}
+                    />
+                    <div>{item.canvas.title}</div>
+                    <div>{item.canvas.price} kr</div>
+                  </Col>
+
+                  <Col>
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "0.5rem",
+                      }}
+                    >
+                      <Button
+                        variant="outline-secondary"
+                        size="sm"
+                        onClick={() =>
+                          updateQuantity(
+                            item.canvas.id,
+                            item.numberOfCanvases - 1
+                          )
+                        }
+                        disabled={item.numberOfCanvases <= 1}
+                      >
+                        -
+                      </Button>
+                      <span
+                        style={{
+                          minWidth: "2rem",
+                          textAlign: "center",
+                          fontWeight: "bold",
+                          fontSize: "1.2rem",
+                        }}
+                      >
+                        {item.numberOfCanvases}
+                      </span>
+                      <Button
+                        variant="outline-secondary"
+                        size="sm"
+                        onClick={() =>
+                          updateQuantity(
+                            item.canvas.id,
+                            item.numberOfCanvases + 1
+                          )
+                        }
+                      >
+                        +
+                      </Button>
+                    </div>
+
+                    <button
+                      className="cart-item-remove"
+                      onClick={() => handleDelete(item.canvas.id)}
+                    >
+                      X
+                    </button>
+                  </Col>
+                </React.Fragment>
               ))
             ) : (
               <p>Inga produkter i kundvagnen.</p>
             )}
           </Row>
         </Container>
+
         <hr className="cart-divider" />
         <div>
-          <p>Fraktkostnad: 49Kr över 200 kr fraktfritt </p>
-          <h2>Totalpris:{totalPrice} kr</h2>
+          <p>Fraktkostnad: 49 kr – över 200 kr fraktfritt</p>
+          <h2>Totalpris: {totalPrice} kr</h2>
         </div>
       </div>
+
       <hr className="cart-divider" />
       <div>
         <OrderPage />

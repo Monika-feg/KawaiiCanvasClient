@@ -10,14 +10,6 @@ import "../components/css/Canvas.css";
 import { fetchAddCanvasToCart } from "../utils/CartApi";
 import { getCartIdFromCookie } from "../utils/CartFromCookie";
 
-const imageUrl = [
-  "https://res.cloudinary.com/dlhqajdjy/image/upload/v1760453935/ai-generated-8362469_640_p1gtnz.png",
-  "https://res.cloudinary.com/dlhqajdjy/image/upload/v1760453958/cat-7057971_640_lmlm6l.png",
-  "https://res.cloudinary.com/dlhqajdjy/image/upload/v1760453966/rabbit-4031334_640_zfr1e0.png",
-  "https://res.cloudinary.com/dlhqajdjy/image/upload/v1760453978/anime-9551089_640_zizyvp.jpg",
-  "https://res.cloudinary.com/dlhqajdjy/image/upload/v1760453944/anime-9685807_640_oods8g.jpg",
-  "https://res.cloudinary.com/dlhqajdjy/image/upload/v1760453949/ai-generated-9509334_640_ouv1x4.jpg",
-];
 function CanvasPage() {
   const [products, setProducts] = useState<Canvas[]>([]);
   const [loading, setLoading] = useState(true);
@@ -67,7 +59,7 @@ function CanvasPage() {
       console.log("Ingen kundvagn hittades. " + cartId);
       return;
     }
-    fetchAddCanvasToCart(cartId, canvasId)
+    fetchAddCanvasToCart(cartId, canvasId, 1)
       .then(() => alert("Tavla tillagd i kundvagnen!"))
       .catch((error) => {
         console.error("Error adding canvas to cart:", error);
@@ -78,10 +70,10 @@ function CanvasPage() {
   return (
     <Container>
       <Row>
-        {products.map((p, index) => (
+        {products.map((p) => (
           <Col key={p.id} xs={12} sm={6} md={4}>
             <Card style={{ width: "18rem" }}>
-              <Card.Img variant="top" src={imageUrl[index]} />
+              <Card.Img variant="top" src={p.imageUrl} />
               <Card.Body className="card-body">
                 <Card.Title>{p.title}</Card.Title>
                 <Card.Text>{p.price}</Card.Text>
