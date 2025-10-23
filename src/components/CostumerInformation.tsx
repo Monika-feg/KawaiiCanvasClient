@@ -4,8 +4,9 @@ import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import { fetchCreateOrder } from "../utils/OrderApi";
-import type { Order } from "../utils/Interfaces";
+import type { Order, Payment } from "../utils/Interfaces";
 import { getCartIdFromCookie } from "../utils/CartFromCookie";
+import { fetchCreatePayment } from "../utils/StripeApi";
 
 function CostumerInformation() {
   const [firstName, setFirstName] = useState("");
@@ -17,6 +18,8 @@ function CostumerInformation() {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const [payment, setPayment] = useState<Payment | null>(null);
+  const [order, setOrder] = useState<Order | null>(null);
 
   const handleCostumerInfo = async () => {
     console.log("Handling customer info submission");
@@ -61,11 +64,23 @@ function CostumerInformation() {
 
     try {
       const createdOrder = await fetchCreateOrder(newOrder, cartId);
+      setOrder(createdOrder);
       setSuccess("Order skapad med ID: " + createdOrder.id);
+      if (createdOrder && createdOrder.id) {
+        // Skapa payment direkt med orderId från backend
+        const paymentResult = await fetchCreatePayment(createdOrder.id);
+        if (paymentResult && paymentResult.url) {
+          console.log("Payment created:", paymentResult);
+          window.location.href = paymentResult.url;
+        }
+        setPayment(paymentResult ?? null);
+        console.log("Payment created:", paymentResult);
+      }
     } catch (err) {
       setError("Kunde inte skapa order. Försök igen.");
     }
   };
+  // handlePayment behövs ej längre, payment skapas direkt efter order
 
   return (
     <Form>

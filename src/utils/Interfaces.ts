@@ -13,10 +13,16 @@ export interface KawaiiResponse<T>{
     data: T;
 }
 
-export interface Cart{
-    id: string;
-    canvases?: Canvas[];
+// Cart-objektet du får från backend
+export interface Cart {
+  id: string;
+  canvases?: Canvas[];
 }
+
+// Cart-objektet du skickar till backend (bara id)
+export type CartRef = {
+  id: string;
+};
 
 export interface Customer{
     firstName: string;
@@ -34,17 +40,21 @@ export interface Payment{
    stripePaymentId:string;
    paymentStatus:string;
    amount:number;
+   url: string;
 
 }
 
-export interface Order{
-    id:string;
-    cart:Cart;
-    customer: Customer;
-    payment?: Payment;
-
-}
-export type NewOrder = {
+// Order du får från backend
+export interface Order {
+  id: string;
+  totalPrice: number;
   cart: Cart;
   customer: Customer;
+  payment?: Payment;
 }
+
+// Order du skickar till backend (utan id, totalPrice, payment)
+export type NewOrder = {
+  cart: CartRef;
+  customer: Customer;
+};
