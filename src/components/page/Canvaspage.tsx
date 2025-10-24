@@ -62,7 +62,9 @@ function CanvasPage() {
       // Hämta aktuell kundvagn
       const cartRes = await fetchGetCartById(cartId);
       // Kolla om canvasen redan finns i kundvagnen
-      const foundItem = cartRes.items.find((item) => item.canvas.id === canvasId);
+      const foundItem = cartRes.items.find(
+        (item) => item.canvas.id === canvasId
+      );
       const newQuantity = foundItem ? foundItem.numberOfCanvases + 1 : 1;
       await fetchAddCanvasToCart(cartId, canvasId, newQuantity);
       alert("Tavla tillagd i kundvagnen!");
