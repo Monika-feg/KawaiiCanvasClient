@@ -3,21 +3,50 @@
   align-items: center;
   border-bottom: 1px solid #eee;
   padding: 1rem 0;
+  gap: 1rem;
 }
 
 .cart-item-title {
   flex: 2;
   margin: 0;
+  font-weight: 500;
+  font-size: 1.1rem;
 }
 
 .cart-item-price {
   flex: 1;
   margin: 0;
+  font-weight: 400;
+  color: #444;
 }
 
 .cart-item-remove {
   flex: 0;
   margin-left: 1rem;
+  background: #ffdddd;
+  border: 1px solid #ff8888;
+  color: #a00;
+  border-radius: 4px;
+  padding: 0.2rem 0.7rem;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.2s;
+}
+.cart-item-remove:hover {
+  background: #ffbbbb;
+}
+
+.cart-item-qty {
+  min-width: 2rem;
+  text-align: center;
+  font-weight: bold;
+  font-size: 1.2rem;
+  margin: 0 0.5rem;
+}
+.cart-item-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 .cart-divider {
   margin: 1rem 0;

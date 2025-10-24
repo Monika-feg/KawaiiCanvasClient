@@ -5,7 +5,7 @@ import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import { fetchCreateOrder } from "../utils/OrderApi";
 import type { Order, Payment } from "../utils/Interfaces";
-import { getCartIdFromCookie } from "../utils/CartFromCookie";
+import { getCartIdFromCookie } from "../utils/FromCookie";
 import { fetchCreatePayment } from "../utils/StripeApi";
 
 function CostumerInformation() {
@@ -18,8 +18,8 @@ function CostumerInformation() {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-  const [payment, setPayment] = useState<Payment | null>(null);
-  const [order, setOrder] = useState<Order | null>(null);
+  const [, setPayment] = useState<Payment | null>(null);
+  const [, setOrder] = useState<Order | null>(null);
 
   const handleCostumerInfo = async () => {
     console.log("Handling customer info submission");
@@ -80,7 +80,6 @@ function CostumerInformation() {
       setError("Kunde inte skapa order. Försök igen.");
     }
   };
-  // handlePayment behövs ej längre, payment skapas direkt efter order
 
   return (
     <Form>
@@ -162,7 +161,7 @@ function CostumerInformation() {
         </Form.Group>
       </Row>
       <Button type="button" onClick={handleCostumerInfo}>
-        Nästa
+        Betala
       </Button>
     </Form>
   );

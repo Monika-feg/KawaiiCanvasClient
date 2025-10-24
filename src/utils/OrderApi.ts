@@ -17,4 +17,17 @@ export async function fetchCreateOrder(NewOrder: NewOrder, cartId: string) {
         throw error;
     }
 }
+
+  export async function fetchGetOrderById(orderId: string) {
+        try {
+            const rep = await axios.get<KawaiiResponse<Order>>(
+                `${BASE_URL}/${orderId}`,
+                { withCredentials: true }
+            );
+            return rep.data.data;
+        } catch (error) {
+            console.error("Error fetching order by ID:", error);
+            throw error;
+        }
+    }
   
