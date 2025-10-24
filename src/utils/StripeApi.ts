@@ -1,8 +1,12 @@
+
 import axios from "axios";
 import type { KawaiiResponse, Payment } from "./Interfaces";
 
-
-const BASE_URL = "http://localhost:8080/api/payments";
+// Välj API-url automatiskt beroende på miljö
+const API_URL =
+    window.location.hostname === "localhost"
+        ? "http://localhost:8080/api/payments" // Lokal utveckling
+        : "https://kawaiicanvasapi.onrender.com/api/payments"; // Produktion
 
 export async function fetchCreatePayment(orderId:string) {
      if (!orderId) {
@@ -10,7 +14,7 @@ export async function fetchCreatePayment(orderId:string) {
     return null;
   }
     try{
-        const rep = await axios.post<KawaiiResponse<Payment>>(`${BASE_URL}?orderId=${orderId}`, {}, { withCredentials: true });
+                const rep = await axios.post<KawaiiResponse<Payment>>(`${API_URL}?orderId=${orderId}`, {}, { withCredentials: true });
         return rep.data.data;
 
     }catch(err){

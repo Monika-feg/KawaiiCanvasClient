@@ -1,13 +1,16 @@
 import axios from "axios";
 import type { KawaiiResponse, Cart } from "./Interfaces";
 
-const BASE_URL = "http://localhost:8080/api/cart";
+const CART_API =
+    window.location.hostname === "localhost"
+        ? "http://localhost:8080/api/cart"
+        : "https://kawaiicanvasapi.onrender.com/api/cart";
 
 // skapar en ny cart när användaren besöker sidan första gången
 export async function fetchNewCart() {
   try {
     const rep = await axios.post<KawaiiResponse<Cart>>(
-      `${BASE_URL}/newCart`,
+      `${CART_API}/newCart`,
       {},
       { withCredentials: true }
     );
@@ -23,7 +26,7 @@ export async function fetchAddCanvasToCart(cartId: string, canvasId: string, qua
    console.log("cartId:", cartId, "canvasId:", canvasId, "quantity:", quantity);
   try {
     const rep = await axios.patch<KawaiiResponse<Cart>>(
-      `${BASE_URL}/${cartId}/canvas/${canvasId}?quantity=${quantity}`,
+      `${CART_API}/${cartId}/canvas/${canvasId}?quantity=${quantity}`,
       { },
       { withCredentials: true }
     );
@@ -37,7 +40,7 @@ export async function fetchAddCanvasToCart(cartId: string, canvasId: string, qua
 // hämtar kundvagnen med dess innehåll
 export async function fetchGetCartById(id: string) {
   try {
-    const rep = await axios.get<KawaiiResponse<Cart>>(`${BASE_URL}/${id}`, {
+    const rep = await axios.get<KawaiiResponse<Cart>>(`${CART_API}/${id}`, {
       withCredentials: true,
     });
     return rep.data.data;
@@ -54,7 +57,7 @@ export async function fetchRemoveCanvasFromCart(
 ) {
   try {
     const rep = await axios.delete<KawaiiResponse<Cart>>(
-      `${BASE_URL}/${cartId}/canvas/${canvasId}`,
+      `${CART_API}/${cartId}/canvas/${canvasId}`,
       {
         withCredentials: true,
       }
@@ -70,7 +73,7 @@ export async function fetchRemoveCanvasFromCart(
 export async function fetchGetCartTotalPrice(cartId: string) {
   try {
     const rep = await axios.get<KawaiiResponse<number>>(
-      `${BASE_URL}/${cartId}/totalPrice`,
+      `${CART_API}/${cartId}/totalPrice`,
       {
         withCredentials: true,
       }
