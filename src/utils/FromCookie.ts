@@ -1,3 +1,7 @@
+// Loggar ut alla cookies i konsolen för felsökning
+export function logAllCookies() {
+  console.log('Alla cookies:', document.cookie);
+}
 // Sätter orderId i cookie med rätt inställningar
 export function setOrderIdCookie(orderId: string) {
   let cookieString = `orderId=${orderId}; path=/`;
