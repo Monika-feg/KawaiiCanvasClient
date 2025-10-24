@@ -1,13 +1,16 @@
 import axios from "axios";
 import type { KawaiiResponse, Order, NewOrder } from "./Interfaces";
 
-const BASE_URL = "http://localhost:8080/api/orders";
+const ORDER_API =
+    window.location.hostname === "localhost"
+        ? "http://localhost:8080/api/orders"
+        : "https://kawaiicanvasapi.onrender.com/api/orders";
 
 
 export async function fetchCreateOrder(NewOrder: NewOrder, cartId: string) {
     try {
         const rep = await axios.post<KawaiiResponse<Order>>(
-            `${BASE_URL}/${cartId}`,
+            `${ORDER_API}/${cartId}`,
             NewOrder,
             { withCredentials: true }
         );
@@ -21,7 +24,7 @@ export async function fetchCreateOrder(NewOrder: NewOrder, cartId: string) {
   export async function fetchGetOrderById(orderId: string) {
         try {
             const rep = await axios.get<KawaiiResponse<Order>>(
-                `${BASE_URL}/${orderId}`,
+                `${ORDER_API}/${orderId}`,
                 { withCredentials: true }
             );
             return rep.data.data;

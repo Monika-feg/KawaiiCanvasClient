@@ -1,11 +1,14 @@
 import axios from "axios";
 import type { Canvas, KawaiiResponse } from "./Interfaces";
 
-const BASE_URL = "http://localhost:8080/api/canvas";
+const CANVAS_API =
+   window.location.hostname === "localhost"
+   ?"http://localhost:8080/api/canvas"
+   : "https://kawaiicanvasapi.onrender.com/api/canvas";
 
 export async function fetchGetAllCanvas() {
   try {
-    const rep = await axios.get<KawaiiResponse<Canvas[]>>(`${BASE_URL}`);
+    const rep = await axios.get<KawaiiResponse<Canvas[]>>(`${CANVAS_API}`);
     return rep.data.data;
   } catch (error) {
     console.error("Error fetching canvas data:", error);
@@ -15,7 +18,7 @@ export async function fetchGetAllCanvas() {
 
 export async function fetchGetCanvasById(id: string) {
   try {
-    const rep = await axios.get<KawaiiResponse<Canvas>>(`${BASE_URL}/${id}`);
+    const rep = await axios.get<KawaiiResponse<Canvas>>(`${CANVAS_API}/${id}`);
     return rep.data.data;
   } catch (error) {
     console.error("Error fetching canvas by ID:", error);
