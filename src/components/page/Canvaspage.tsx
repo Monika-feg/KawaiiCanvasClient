@@ -4,17 +4,17 @@ import Card from "react-bootstrap/Card";
 import Container from "react-bootstrap/esm/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import { fetchGetAllCanvas } from "../utils/CanvasApi";
-import type { Canvas } from "../utils/Interfaces";
-import "../components/css/Canvas.css";
-import { fetchAddCanvasToCart } from "../utils/CartApi";
-import { getCartIdFromCookie } from "../utils/CartFromCookie";
+import { fetchGetAllCanvas } from "../../utils/CanvasApi";
+import type { Canvas } from "../../utils/Interfaces";
+import "../css/Canvas.css";
+import { fetchAddCanvasToCart, fetchGetCartById } from "../../utils/CartApi";
+import { getCartIdFromCookie } from "../../utils/FromCookie";
 
 function CanvasPage() {
   const [products, setProducts] = useState<Canvas[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [cartId, setCartId] = useState<string>("");
+  const [, setCartId] = useState<string>("");
 
   // hämtar cartId från cookie
   useEffect(() => {
@@ -51,20 +51,24 @@ function CanvasPage() {
     );
   }
 
-  const handleAddToCart = (canvasId: string) => {
-    console.log(" Klick på mig! ");
-    // det är här websocket ska anroppas
-    // flytta till kundvagnen
+  const handleAddToCart = async (canvasId: string) => {
+    const cartId = getCartIdFromCookie();
     if (!cartId) {
       console.log("Ingen kundvagn hittades. " + cartId);
       return;
     }
-    fetchAddCanvasToCart(cartId, canvasId, 1)
-      .then(() => alert("Tavla tillagd i kundvagnen!"))
-      .catch((error) => {
-        console.error("Error adding canvas to cart:", error);
-        alert("Kunde inte lägga till tavlan i kundvagnen.");
-      });
+    try {
+      // Hämta aktuell kundvagn
+      const cartRes = await fetchGetCartById(cartId);
+      // Kolla om canvasen redan finns i kundvagnen
+      const foundItem = cartRes.items.find((item) => item.canvas.id === canvasId);
+      const newQuantity = foundItem ? foundItem.numberOfCanvases + 1 : 1;
+      await fetchAddCanvasToCart(cartId, canvasId, newQuantity);
+      alert("Tavla tillagd i kundvagnen!");
+    } catch (error) {
+      console.error("Error adding canvas to cart:", error);
+      alert("Kunde inte lägga till tavlan i kundvagnen.");
+    }
   };
 
   return (

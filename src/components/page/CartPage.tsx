@@ -4,16 +4,14 @@ import {
   fetchGetCartById,
   fetchGetCartTotalPrice,
   fetchRemoveCanvasFromCart,
-} from "../utils/CartApi";
-import type { Cart } from "../utils/Interfaces";
-import { getCartIdFromCookie } from "../utils/CartFromCookie";
+} from "../../utils/CartApi";
+import type { Cart } from "../../utils/Interfaces";
+import { getCartIdFromCookie } from "../../utils/FromCookie";
 import Container from "react-bootstrap/esm/Container";
 import Row from "react-bootstrap/esm/Row";
-import "../components/css/Cart.css";
-import OrderPage from "./OrderPage";
-import Col from "react-bootstrap/esm/Col";
+import "../css/Cart.css";
+import OrderPage from "../page/OrderPage";
 import Button from "react-bootstrap/esm/Button";
-import React from "react";
 
 function CartPage() {
   const [cart, setCart] = useState<Cart | null>(null);
@@ -117,70 +115,51 @@ function CartPage() {
           <Row>
             {cart && cart.items && cart.items.length > 0 ? (
               cart.items.map((item) => (
-                <React.Fragment key={item.id}>
-                  <Col className="cart-item-row">
-                    <img
-                      src={item.canvas.imageUrl}
-                      alt={item.canvas.title}
-                      width={80}
-                    />
-                    <div>{item.canvas.title}</div>
-                    <div>{item.canvas.price} kr</div>
-                  </Col>
-
-                  <Col>
-                    <div
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "0.5rem",
-                      }}
+                <div key={item.id} className="cart-item-row">
+                  <img
+                    src={item.canvas.imageUrl}
+                    alt={item.canvas.title}
+                    width={80}
+                  />
+                  <div className="cart-item-title">{item.canvas.title}</div>
+                  <div className="cart-item-price">{item.canvas.price} kr</div>
+                  <div className="cart-item-controls">
+                    <Button
+                      variant="outline-secondary"
+                      size="sm"
+                      onClick={() =>
+                        updateQuantity(
+                          item.canvas.id,
+                          item.numberOfCanvases - 1
+                        )
+                      }
+                      disabled={item.numberOfCanvases <= 1}
                     >
-                      <Button
-                        variant="outline-secondary"
-                        size="sm"
-                        onClick={() =>
-                          updateQuantity(
-                            item.canvas.id,
-                            item.numberOfCanvases - 1
-                          )
-                        }
-                        disabled={item.numberOfCanvases <= 1}
-                      >
-                        -
-                      </Button>
-                      <span
-                        style={{
-                          minWidth: "2rem",
-                          textAlign: "center",
-                          fontWeight: "bold",
-                          fontSize: "1.2rem",
-                        }}
-                      >
-                        {item.numberOfCanvases}
-                      </span>
-                      <Button
-                        variant="outline-secondary"
-                        size="sm"
-                        onClick={() =>
-                          updateQuantity(
-                            item.canvas.id,
-                            item.numberOfCanvases + 1
-                          )
-                        }
-                      >
-                        +
-                      </Button>
-                    </div>
-
-                    <button
-                      className="cart-item-remove"
-                      onClick={() => handleDelete(item.canvas.id)}
+                      -
+                    </Button>
+                    <span className="cart-item-qty">
+                      {item.numberOfCanvases}
+                    </span>
+                    <Button
+                      variant="outline-secondary"
+                      size="sm"
+                      onClick={() =>
+                        updateQuantity(
+                          item.canvas.id,
+                          item.numberOfCanvases + 1
+                        )
+                      }
                     >
-                      X
-                    </button>
-                  </Col>
-                </React.Fragment>
+                      +
+                    </Button>
+                  </div>
+                  <button
+                    className="cart-item-remove"
+                    onClick={() => handleDelete(item.canvas.id)}
+                  >
+                    X
+                  </button>
+                </div>
               ))
             ) : (
               <p>Inga produkter i kundvagnen.</p>
@@ -196,9 +175,7 @@ function CartPage() {
       </div>
 
       <hr className="cart-divider" />
-      <div>
-        <OrderPage />
-      </div>
+      <div>{cart && cart.items && cart.items.length > 0 && <OrderPage />}</div>
     </>
   );
 }

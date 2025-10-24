@@ -1,4 +1,4 @@
-import CostumerInformation from "./CostumerInformation";
+import CostumerInformation from "../CostumerInformation";
 
 function OrderPage() {
   return (
