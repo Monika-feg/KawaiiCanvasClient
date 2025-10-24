@@ -8,7 +8,7 @@ import { fetchGetAllCanvas } from "../../utils/CanvasApi";
 import type { Canvas } from "../../utils/Interfaces";
 import "../css/Canvas.css";
 import { fetchAddCanvasToCart, fetchGetCartById } from "../../utils/CartApi";
-import { getCartIdFromCookie } from "../../utils/FromCookie";
+import { getCartIdFromCookie, logAllCookies } from "../../utils/FromCookie";
 
 function CanvasPage() {
   const [products, setProducts] = useState<Canvas[]>([]);
@@ -16,8 +16,9 @@ function CanvasPage() {
   const [error, setError] = useState<string | null>(null);
   const [, setCartId] = useState<string>("");
 
-  // hämtar cartId från cookie
+  // Logga alla cookies vid sidladdning
   useEffect(() => {
+    logAllCookies();
     const id = getCartIdFromCookie();
     if (id) setCartId(id);
   }, []);
