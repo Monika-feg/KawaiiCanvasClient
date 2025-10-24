@@ -7,14 +7,22 @@ import CustomNavbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import { useEffect } from "react";
 import { fetchNewCart } from "./utils/CartApi";
+import { getCartIdFromCookie } from "./utils/FromCookie";
 import OrderPage from "./components/page/OrderPage";
 import ShowOrderpage from "./components/page/ShowOrderpage";
+
 function App() {
   useEffect(() => {
-    // Här kan du lägga till logik för att hämta eller skapa en kundvagn om det behövs
-    fetchNewCart().then((cartId) => {
-      console.log("New cart created with ID:", cartId);
-    });
+    const cartId = getCartIdFromCookie();
+    if (!cartId) {
+      fetchNewCart().then((cart) => {
+        console.log("New cart created with ID:", cart.id);
+        setTimeout(() => {
+          console.log("document.cookie efter skapande:", document.cookie);
+          console.log("cartId från funktionen:", getCartIdFromCookie());
+        }, 1000); // Vänta 1 sekund för att se om cookien dyker upp
+      });
+    }
   }, []);
   return (
     <>
