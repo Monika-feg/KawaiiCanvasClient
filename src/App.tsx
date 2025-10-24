@@ -20,7 +20,7 @@ function App() {
         setTimeout(() => {
           console.log("document.cookie efter skapande:", document.cookie);
           console.log("cartId från funktionen:", getCartIdFromCookie());
-        }, 1000); // Vänta 1 sekund för att se om cookien dyker upp
+        }, 30000); // Vänta 30 sekunder för att se om cookien dyker upp
       });
     }
   }, []);
