@@ -10,10 +10,7 @@ const CART_API =
 export async function fetchNewCart() {
   try {
     const rep = await axios.post<KawaiiResponse<Cart>>(
-      `${CART_API}/newCart`,
-      {},
-      { withCredentials: true }
-    );
+      `${CART_API}/newCart`, {});
     return rep.data.data;
   } catch (error) {
     console.error("Error creating new cart:", error);
@@ -26,10 +23,7 @@ export async function fetchAddCanvasToCart(cartId: string, canvasId: string, qua
    console.log("cartId:", cartId, "canvasId:", canvasId, "quantity:", quantity);
   try {
     const rep = await axios.patch<KawaiiResponse<Cart>>(
-      `${CART_API}/${cartId}/canvas/${canvasId}?quantity=${quantity}`,
-      { },
-      { withCredentials: true }
-    );
+      `${CART_API}/${cartId}/canvas/${canvasId}?quantity=${quantity}`);
     return rep.data.data;
   } catch (error) {
     console.error("Error adding canvas to cart:", error);
@@ -38,11 +32,9 @@ export async function fetchAddCanvasToCart(cartId: string, canvasId: string, qua
 }
 
 // hämtar kundvagnen med dess innehåll
-export async function fetchGetCartById() {
+export async function fetchGetCartById(cartId: string) {
   try {
-    const rep = await axios.get<KawaiiResponse<Cart>>(`${CART_API}/currentCart`, {
-      withCredentials: true,
-    });
+    const rep = await axios.get<KawaiiResponse<Cart>>(`${CART_API}/${cartId}`);
     return rep.data.data;
   } catch (error) {
     console.error("Error fetching cart by ID:", error);
@@ -57,11 +49,7 @@ export async function fetchRemoveCanvasFromCart(
 ) {
   try {
     const rep = await axios.delete<KawaiiResponse<Cart>>(
-      `${CART_API}/${cartId}/canvas/${canvasId}`,
-      {
-        withCredentials: true,
-      }
-    );
+      `${CART_API}/${cartId}/canvas/${canvasId}`);
     return rep.data.data;
   } catch (error) {
     console.error("Error removing canvas from cart:", error);
@@ -73,11 +61,7 @@ export async function fetchRemoveCanvasFromCart(
 export async function fetchGetCartTotalPrice(cartId: string) {
   try {
     const rep = await axios.get<KawaiiResponse<number>>(
-      `${CART_API}/${cartId}/totalPrice`,
-      {
-        withCredentials: true,
-      }
-    );
+      `${CART_API}/${cartId}/totalPrice` );
     return rep.data.data;
   } catch (error) {
     console.error("Error fetching cart total price:", error);

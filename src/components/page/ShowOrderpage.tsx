@@ -1,14 +1,15 @@
 import { useEffect, useState } from "react";
-import { getOrderIdFromCookie } from "../../utils/FromCookie";
+
 import { fetchGetOrderById } from "../../utils/OrderApi";
 import type { Order } from "../../utils/Interfaces";
+import { getOrderIdFromLocalstorage } from "../../utils/FromLocalstorage";
 
 function ShowOrderpage() {
   const [order, setOrder] = useState<Order | null>(null);
 
   useEffect(() => {
-    const orderId = getOrderIdFromCookie();
-    console.log("Order ID från cookie:", orderId);
+    const orderId = getOrderIdFromLocalstorage();
+    console.log("Order ID från localstorage:", orderId);
 
     if (orderId) {
       fetchGetOrderById(orderId)
