@@ -6,12 +6,12 @@ import {
   fetchRemoveCanvasFromCart,
 } from "../../utils/CartApi";
 import type { Cart } from "../../utils/Interfaces";
-import { getCartIdFromCookie } from "../../utils/FromCookie";
 import Container from "react-bootstrap/esm/Container";
 import Row from "react-bootstrap/esm/Row";
 import "../css/Cart.css";
 import OrderPage from "../page/OrderPage";
 import Button from "react-bootstrap/esm/Button";
+import { getCartIdFromLocalstorage } from "../../utils/FromLocalstorage";
 
 function CartPage() {
   const [cart, setCart] = useState<Cart | null>(null);
@@ -20,9 +20,8 @@ function CartPage() {
   const [totalPrice, setTotalPrice] = useState<number>(0);
 
   useEffect(() => {
+    const cartId = getCartIdFromLocalstorage();
     // Här kan du hämta kundvagnens innehåll
-    const cartId = getCartIdFromCookie();
-    console.log("cartId från cookie:", cartId);
     if (cartId) {
       fetchGetCartById(cartId)
         .then((data) => {
@@ -70,7 +69,7 @@ function CartPage() {
 
   const updateQuantity = async (canvasId: string, newQuantity: number) => {
     if (!cart || !cart.id) return;
-    if (newQuantity < 1) return; // Skicka aldrig mindre än 1
+    if (newQuantity < 1) return;
 
     try {
       const updatedCart = await fetchAddCanvasToCart(

@@ -10,16 +10,17 @@ import OrderPage from "./components/page/OrderPage";
 import ShowOrderpage from "./components/page/ShowOrderpage";
 import { fetchNewCart } from "./utils/CartApi";
 import type { Cart } from "./utils/Interfaces";
+import { setCartIdToLocalstorage } from "./utils/FromLocalstorage";
 
 function App() {
   const [, setCart] = useState<Cart | null>(null);
   useEffect(() => {
-    // Skapa ny cart och få tillbaka cart-objektet från backend
-      fetchNewCart()
-        .then((cart) => {
-          console.log("Cart från backend:", cart);
-          setCart(cart);
-        })
+    fetchNewCart()
+      .then((cart) => {
+        console.log("Cart från backend:", cart);
+        setCart(cart);
+        setCartIdToLocalstorage(cart.id);
+      })
       .catch(() => {});
   }, []);
 
