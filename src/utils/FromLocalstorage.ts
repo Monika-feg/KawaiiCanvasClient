@@ -2,6 +2,7 @@
 
 // håller localstorage giltig i fem dagar
 const FIVE_DAYS_MS = 5 * 24 * 60 * 60 * 1000;
+const THIRTY_MS = 30 * 60 * 1000;
 
 // genererar ett unikt id med prefix
 function generateId(prefix: string = "id"): string {
@@ -38,7 +39,7 @@ export function getCartIdFromLocalstorage(): string {
 export function setOrderIdToLocalstorage(orderId: string): void {
 	const data = {
 		value: orderId,
-		expires: Date.now() + FIVE_DAYS_MS
+		expires: Date.now() + THIRTY_MS
 	};
 	localStorage.setItem("orderId", JSON.stringify(data));
 }
