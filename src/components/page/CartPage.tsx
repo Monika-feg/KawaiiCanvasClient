@@ -22,6 +22,7 @@ function CartPage() {
   useEffect(() => {
     // Här kan du hämta kundvagnens innehåll
     const cartId = getCartIdFromCookie();
+    console.log("cartId från cookie:", cartId);
     if (cartId) {
       fetchGetCartById(cartId)
         .then((data) => {
