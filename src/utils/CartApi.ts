@@ -38,9 +38,9 @@ export async function fetchAddCanvasToCart(cartId: string, canvasId: string, qua
 }
 
 // hämtar kundvagnen med dess innehåll
-export async function fetchGetCartById(id: string) {
+export async function fetchGetCartById() {
   try {
-    const rep = await axios.get<KawaiiResponse<Cart>>(`${CART_API}/${id}`, {
+    const rep = await axios.get<KawaiiResponse<Cart>>(`${CART_API}/currentCart`, {
       withCredentials: true,
     });
     return rep.data.data;

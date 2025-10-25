@@ -60,7 +60,7 @@ function CanvasPage() {
     }
     try {
       // Hämta aktuell kundvagn
-      const cartRes = await fetchGetCartById(cartId);
+      const cartRes = await fetchGetCartById();
       // Kolla om canvasen redan finns i kundvagnen
       const foundItem = cartRes.items.find(
         (item) => item.canvas.id === canvasId

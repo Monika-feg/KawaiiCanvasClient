@@ -6,7 +6,6 @@ import {
   fetchRemoveCanvasFromCart,
 } from "../../utils/CartApi";
 import type { Cart } from "../../utils/Interfaces";
-import { getCartIdFromCookie } from "../../utils/FromCookie";
 import Container from "react-bootstrap/esm/Container";
 import Row from "react-bootstrap/esm/Row";
 import "../css/Cart.css";
@@ -21,10 +20,8 @@ function CartPage() {
 
   useEffect(() => {
     // Här kan du hämta kundvagnens innehåll
-    const cartId = getCartIdFromCookie();
-    console.log("cartId från cookie:", cartId);
-    if (cartId) {
-      fetchGetCartById(cartId)
+    if (cart?.id) {
+      fetchGetCartById()
         .then((data) => {
           setCart(data);
           setLoading(false);
