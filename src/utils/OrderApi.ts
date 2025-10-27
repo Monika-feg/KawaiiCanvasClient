@@ -11,9 +11,7 @@ export async function fetchCreateOrder(NewOrder: NewOrder, cartId: string) {
     try {
         const rep = await axios.post<KawaiiResponse<Order>>(
             `${ORDER_API}/${cartId}`,
-            NewOrder,
-            { withCredentials: true }
-        );
+            NewOrder);
         return rep.data.data;
     } catch (error) {
         console.error("Error creating order:", error);
@@ -24,9 +22,7 @@ export async function fetchCreateOrder(NewOrder: NewOrder, cartId: string) {
   export async function fetchGetOrderById(orderId: string) {
         try {
             const rep = await axios.get<KawaiiResponse<Order>>(
-                `${ORDER_API}/${orderId}`,
-                { withCredentials: true }
-            );
+                `${ORDER_API}/${orderId}`);
             return rep.data.data;
         } catch (error) {
             console.error("Error fetching order by ID:", error);

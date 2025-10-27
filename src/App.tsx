@@ -5,19 +5,31 @@ import CartPage from "./components/page/CartPage";
 import HomePage from "./components/page/HomePage";
 import CustomNavbar from "./components/Navbar";
 import Footer from "./components/Footer";
-import { useEffect } from "react";
-import { fetchNewCart } from "./utils/CartApi";
+import { useEffect, useState } from "react";
 import OrderPage from "./components/page/OrderPage";
 import ShowOrderpage from "./components/page/ShowOrderpage";
 
+
 import BotComponent from "./components/BotComponent";
 
+
+import { fetchNewCart } from "./utils/CartApi";
+import type { Cart } from "./utils/Interfaces";
+import { setCartIdToLocalstorage } from "./utils/FromLocalstorage";
+
+const BotUrl =
+  "https://res.cloudinary.com/dlhqajdjy/image/upload/v1761549231/mushroom-7882773_640_1_uzn5d2.png";
+
 function App() {
+  const [, setCart] = useState<Cart | null>(null);
   useEffect(() => {
-    // Här kan du lägga till logik för att hämta eller skapa en kundvagn om det behövs
-    fetchNewCart().then((cartId) => {
-      console.log("New cart created with ID:", cartId);
-    });
+    fetchNewCart()
+      .then((cart) => {
+        console.log("Cart från backend:", cart);
+        setCart(cart);
+        setCartIdToLocalstorage(cart.id);
+      })
+      .catch(() => {});
   }, []);
 
   return (

@@ -8,19 +8,12 @@ import { fetchGetAllCanvas } from "../../utils/CanvasApi";
 import type { Canvas } from "../../utils/Interfaces";
 import "../css/Canvas.css";
 import { fetchAddCanvasToCart, fetchGetCartById } from "../../utils/CartApi";
-import { getCartIdFromCookie } from "../../utils/FromCookie";
+import { getCartIdFromLocalstorage } from "../../utils/FromLocalstorage";
 
 function CanvasPage() {
   const [products, setProducts] = useState<Canvas[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [, setCartId] = useState<string>("");
-
-  // hämtar cartId från cookie
-  useEffect(() => {
-    const id = getCartIdFromCookie();
-    if (id) setCartId(id);
-  }, []);
 
   // hämtar tavlor från backend
   useEffect(() => {
@@ -52,16 +45,19 @@ function CanvasPage() {
   }
 
   const handleAddToCart = async (canvasId: string) => {
-    const cartId = getCartIdFromCookie();
+    const cartId = getCartIdFromLocalstorage();
     if (!cartId) {
       console.log("Ingen kundvagn hittades. " + cartId);
       return;
     }
     try {
+      const cartId = getCartIdFromLocalstorage();
       // Hämta aktuell kundvagn
       const cartRes = await fetchGetCartById(cartId);
       // Kolla om canvasen redan finns i kundvagnen
-      const foundItem = cartRes.items.find((item) => item.canvas.id === canvasId);
+      const foundItem = cartRes.items.find(
+        (item) => item.canvas.id === canvasId
+      );
       const newQuantity = foundItem ? foundItem.numberOfCanvases + 1 : 1;
       await fetchAddCanvasToCart(cartId, canvasId, newQuantity);
       alert("Tavla tillagd i kundvagnen!");

@@ -14,7 +14,7 @@ export async function fetchCreatePayment(orderId:string) {
     return null;
   }
     try{
-                const rep = await axios.post<KawaiiResponse<Payment>>(`${API_URL}?orderId=${orderId}`, {}, { withCredentials: true });
+      const rep = await axios.post<KawaiiResponse<Payment>>(`${API_URL}?orderId=${orderId}`);
         return rep.data.data;
 
     }catch(err){

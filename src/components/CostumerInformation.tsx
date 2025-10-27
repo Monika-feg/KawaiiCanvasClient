@@ -4,9 +4,12 @@ import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import { fetchCreateOrder } from "../utils/OrderApi";
-import type { Order, Payment } from "../utils/Interfaces";
-import { getCartIdFromCookie } from "../utils/FromCookie";
+import type { Payment } from "../utils/Interfaces";
 import { fetchCreatePayment } from "../utils/StripeApi";
+import {
+  getCartIdFromLocalstorage,
+  setOrderIdToLocalstorage,
+} from "../utils/FromLocalstorage";
 
 function CostumerInformation() {
   const [firstName, setFirstName] = useState("");
@@ -19,7 +22,6 @@ function CostumerInformation() {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [, setPayment] = useState<Payment | null>(null);
-  const [, setOrder] = useState<Order | null>(null);
 
   const handleCostumerInfo = async () => {
     console.log("Handling customer info submission");
@@ -39,7 +41,7 @@ function CostumerInformation() {
       return;
     }
 
-    const cartId = getCartIdFromCookie();
+    const cartId = getCartIdFromLocalstorage();
     if (!cartId) {
       setError("Kundvagn saknas.");
       return;
@@ -64,7 +66,7 @@ function CostumerInformation() {
 
     try {
       const createdOrder = await fetchCreateOrder(newOrder, cartId);
-      setOrder(createdOrder);
+      setOrderIdToLocalstorage(createdOrder.id);
       setSuccess("Order skapad med ID: " + createdOrder.id);
       if (createdOrder && createdOrder.id) {
         // Skapa payment direkt med orderId från backend
