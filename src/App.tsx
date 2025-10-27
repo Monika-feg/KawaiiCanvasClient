@@ -9,6 +9,9 @@ import { useEffect } from "react";
 import { fetchNewCart } from "./utils/CartApi";
 import OrderPage from "./components/page/OrderPage";
 import ShowOrderpage from "./components/page/ShowOrderpage";
+
+import BotComponent from "./components/BotComponent";
+
 function App() {
   useEffect(() => {
     // Här kan du lägga till logik för att hämta eller skapa en kundvagn om det behövs
@@ -16,6 +19,7 @@ function App() {
       console.log("New cart created with ID:", cartId);
     });
   }, []);
+
   return (
     <>
       <Router>
@@ -30,8 +34,13 @@ function App() {
               <Route path="/show-order" element={<ShowOrderpage />} />
             </Routes>
           </div>
+          <div>
+            <BotComponent />
+          </div>
+          <div>
+            <Footer />
+          </div>
         </div>
-        <Footer />
       </Router>
     </>
   );
