@@ -8,12 +8,18 @@ import Footer from "./components/Footer";
 import { useEffect, useState } from "react";
 import OrderPage from "./components/page/OrderPage";
 import ShowOrderpage from "./components/page/ShowOrderpage";
+
+
+import BotComponent from "./components/BotComponent";
+
+
 import { fetchNewCart } from "./utils/CartApi";
 import type { Cart } from "./utils/Interfaces";
 import { setCartIdToLocalstorage } from "./utils/FromLocalstorage";
 
 const BotUrl =
   "https://res.cloudinary.com/dlhqajdjy/image/upload/v1761549231/mushroom-7882773_640_1_uzn5d2.png";
+
 function App() {
   const [, setCart] = useState<Cart | null>(null);
   useEffect(() => {
@@ -40,8 +46,13 @@ function App() {
               <Route path="/show-order" element={<ShowOrderpage />} />
             </Routes>
           </div>
+          <div>
+            <BotComponent />
+          </div>
+          <div>
+            <Footer />
+          </div>
         </div>
-        <Footer />
       </Router>
     </>
   );

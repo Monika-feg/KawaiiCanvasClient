@@ -1,5 +1,3 @@
-
-
 export interface Canvas {
   id: string;
   title: string;
@@ -63,4 +61,38 @@ export interface Order {
 export type NewOrder = {
   cart: CartRef;
   customer: Customer;
-};
+}
+
+
+export interface DraggableImageProps {
+  id: string;
+  src: string;
+  x: number;
+  y: number;
+  width?: number;
+  height?: number;
+}
+
+export interface Message {
+  role: string;
+  content: string;
+
+}
+
+export interface ChatRequest{
+  messages: Message[];
+}
+
+export interface ChatResponse{
+  choices: {
+    message: Message;
+  }
+}
+
+   export enum ChatBotResponseEnum {
+  LEVERANCE = "LEVERANCE",
+  RETURNS = "RETURNS",
+  PAYING = "PAYING",
+  CONTACT = "CONTACT",
+}
+

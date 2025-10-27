@@ -1,3 +1,21 @@
+/* Fixed position for bot in bottom right corner */
+.bot-container {
+  position: fixed;
+  right: 2vw;
+  bottom: 3vw;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+/* Make the home page mushroom image smaller */
+.home-mushroom {
+  width: 400px;
+  height: auto;
+  display: block;
+  margin: 1.5rem auto;
+}
+
 #root {
   max-width: 1280px;
   margin: 0 auto;
@@ -19,6 +37,10 @@
   a:nth-of-type(2) .logo {
     animation: logo-spin infinite 20s linear;
   }
+}
+
+body {
+  overflow-x: hidden;
 }
 
 
