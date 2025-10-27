@@ -1,0 +1,38 @@
+/* Roligare och blad-inspirerad orderlista */
+.order-leaf-list {
+  background: linear-gradient(135deg, #e0f7e9 0%, #b2f7c1 100%);
+  border-radius: 32px 48px 32px 48px / 48px 32px 48px 32px;
+  box-shadow: 0 4px 24px 0 rgba(0,0,0,0.10);
+  padding: 2rem 2.5rem;
+  margin: 2rem auto;
+  max-width: 480px;
+  list-style: none;
+  position: relative;
+}
+.order-leaf-list li {
+  background: #fff;
+  border-radius: 24px;
+  margin-bottom: 1.2rem;
+  padding: 1rem 1.5rem;
+  font-size: 1.15em;
+  box-shadow: 0 2px 8px 0 rgba(0,0,0,0.07);
+  display: flex;
+  align-items: center;
+  gap: 1.2em;
+  position: relative;
+}
+.order-leaf-list li:last-child {
+  margin-bottom: 0;
+}
+.order-leaf-list::after {
+  content: "";
+  position: absolute;
+  bottom: -18px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 24px;
+  background: radial-gradient(circle, #b2f7c1 60%, transparent 100%);
+  border-radius: 50%;
+  opacity: 0.5;
+}

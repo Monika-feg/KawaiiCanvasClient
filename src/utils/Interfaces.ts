@@ -55,6 +55,8 @@ export interface Order {
   cart: Cart;
   customer: Customer;
   payment?: Payment;
+  items: CartItem[];
+
 }
 
 // Order du skickar till backend (utan id, totalPrice, payment)
