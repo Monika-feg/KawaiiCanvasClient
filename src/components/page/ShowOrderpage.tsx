@@ -1,25 +1,40 @@
 import { useEffect, useState } from "react";
 
-import { fetchGetOrderById } from "../../utils/OrderApi";
 import type { Order } from "../../utils/Interfaces";
-import { getOrderIdFromLocalstorage } from "../../utils/FromLocalstorage";
 import "../css/ShowOrderpage.css";
+import { fetchGetPaymentStatus } from "../../utils/StripeApi";
 
 function ShowOrderpage() {
   const [order, setOrder] = useState<Order | null>(null);
+  const [, setStatus] = useState<string>("");
 
   useEffect(() => {
-    const orderId = getOrderIdFromLocalstorage();
-    console.log("Order ID från localstorage:", orderId);
+    let sessionId = null;
+    if (window.location.hash) {
+      const hashParams = new URLSearchParams(
+        window.location.hash.split("?")[1]
+      );
+      sessionId = hashParams.get("session_id");
+    } else {
+      const params = new URLSearchParams(window.location.search);
+      sessionId = params.get("session_id");
+    }
+    console.log("Session ID från URL:", sessionId);
+    console.log("Session ID från URL:", sessionId);
 
-    if (orderId) {
-      fetchGetOrderById(orderId)
-        .then((data) => {
-          setOrder(data);
+    if (sessionId) {
+      fetchGetPaymentStatus(sessionId)
+        .then((res) => {
+          console.log("Payment status response:", res);
+          setStatus("Betalning lyckades!");
+          if (res) setOrder(res);
         })
         .catch((error) => {
+          setStatus("Betalning misslyckades eller avbröts.");
           console.error("Fel vid hämtning av order:", error);
         });
+    } else {
+      setStatus("Ingen session ID hittades i URL:en.");
     }
   }, []);
 
