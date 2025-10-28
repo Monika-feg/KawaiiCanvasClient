@@ -9,13 +9,15 @@ import type { Canvas } from "../../utils/Interfaces";
 import "../css/Canvas.css";
 import { fetchAddCanvasToCart, fetchGetCartById } from "../../utils/CartApi";
 import { getCartIdFromLocalstorage } from "../../utils/FromLocalstorage";
+import { useLiveUpdateStock } from "../../utils/LiveUpdateStock";
 
 function CanvasPage() {
   const [products, setProducts] = useState<Canvas[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const stock = useLiveUpdateStock();
 
-  // hämtar tavlor från backend
+  // hämtar tavlor från backend och lagerstatus
   useEffect(() => {
     try {
       fetchGetAllCanvas().then((data) => {
@@ -70,23 +72,30 @@ function CanvasPage() {
   return (
     <Container>
       <Row>
-        {products.map((p) => (
-          <Col key={p.id} xs={12} sm={6} md={4}>
-            <Card style={{ width: "18rem" }}>
-              <Card.Img variant="top" src={p.imageUrl} />
-              <Card.Body className="card-body">
-                <Card.Title>{p.title}</Card.Title>
-                <Card.Text>{p.price}</Card.Text>
-                <Button
-                  className="canvas-button"
-                  onClick={() => handleAddToCart(p.id)}
-                >
-                  Lägg i varukorgen
-                </Button>
-              </Card.Body>
-            </Card>
-          </Col>
-        ))}
+        {products.map((p) => {
+          const liveStock = stock.find((item) => item.itemId === p.id);
+          return (
+            <Col key={p.id} xs={12} sm={6} md={4}>
+              <Card style={{ width: "18rem" }}>
+                <Card.Img variant="top" src={p.imageUrl} />
+                <Card.Body className="card-body">
+                  <Card.Title>{p.title}</Card.Title>
+                  <Card.Text>{p.price}</Card.Text>
+                  <Card.Text>
+                    Lagerstatus:{" "}
+                    {liveStock ? liveStock.quantity : p.stockQuantity}
+                  </Card.Text>
+                  <Button
+                    className="canvas-button"
+                    onClick={() => handleAddToCart(p.id)}
+                  >
+                    Lägg i varukorgen
+                  </Button>
+                </Card.Body>
+              </Card>
+            </Col>
+          );
+        })}
       </Row>
     </Container>
   );

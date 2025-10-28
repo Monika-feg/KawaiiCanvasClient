@@ -3,6 +3,7 @@ export interface Canvas {
   title: string;
   price: string;
   imageUrl?: string;
+  stockQuantity:number;
 }
 
 export interface KawaiiResponse<T>{
@@ -45,6 +46,7 @@ export interface Payment{
    paymentStatus:string;
    amount:number;
    url: string;
+   
 
 }
 
@@ -65,15 +67,6 @@ export type NewOrder = {
   customer: Customer;
 }
 
-
-export interface DraggableImageProps {
-  id: string;
-  src: string;
-  x: number;
-  y: number;
-  width?: number;
-  height?: number;
-}
 
 export interface Message {
   role: string;
@@ -96,5 +89,11 @@ export interface ChatResponse{
   RETURNS = "RETURNS",
   PAYING = "PAYING",
   CONTACT = "CONTACT",
+}
+
+export interface Inventory{
+  itemId: string;
+  itemName : string;
+  quantity:number;
 }
 
