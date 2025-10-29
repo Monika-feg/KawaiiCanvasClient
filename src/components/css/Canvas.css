@@ -1,3 +1,23 @@
+.stock-warning {
+  color: oklch(45.9% 0.187 3.815);
+  font-weight: bold;
+  margin-left: 4px;
+}
+
+.stock-out {
+  color: red;
+  font-weight: bold;
+  margin-left: 4px;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.blink {
+  animation: blink 1s step-start 0s infinite;
+}
 
 .card-body {
     background-color: oklch(89.9% 0.061 343.231);
