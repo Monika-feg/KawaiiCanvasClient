@@ -84,12 +84,6 @@ export interface ChatResponse{
   }
 }
 
-   export enum ChatBotResponseEnum {
-  LEVERANCE = "LEVERANCE",
-  RETURNS = "RETURNS",
-  PAYING = "PAYING",
-  CONTACT = "CONTACT",
-}
 
 export interface Inventory{
   itemId: string;
