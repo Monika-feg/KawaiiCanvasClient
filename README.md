@@ -57,6 +57,19 @@ Se till att Stripe-URL:er och API-anrop pekar rätt beroende på om du kör loka
 - Se till att API-anropen i frontend pekar mot rätt backend-url.
 - För betalning, se till att Stripe-URL:er i backend och frontend matchar.
 
+## Testa betalning med Stripe
+
+För att testa köpflödet i utvecklingsmiljö:
+
+1. Välj "kort" som betalningsmetod i Stripe-rutan.
+2. Använd ett testmail (valfritt, t.ex. test@example.com).
+3. Använd detta testkort:
+   - **Kortnummer:** 4242 4242 4242 4242
+   - **Utgångsdatum:** valfritt framtida datum, t.ex. 12/26
+   - **CVC:** 123
+
+Du behöver inte använda riktiga kortuppgifter – Stripe hanterar testköp automatiskt i utvecklingsläge.
+
 ## Kontakt
 
 Byggd av Monika-feg. Kontakta mig gärna via GitHub!
