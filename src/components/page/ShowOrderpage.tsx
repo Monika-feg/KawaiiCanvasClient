@@ -42,7 +42,9 @@ function ShowOrderpage() {
   return (
     <div>
       <h1>Tack för din order! 🎉</h1>
-      {order ? (
+      {order === null ? (
+        <p>Laddar...</p>
+      ) : (
         <div className="order-leaf-list">
           <h2>Orderdetaljer</h2>
           <p>
@@ -84,8 +86,6 @@ function ShowOrderpage() {
             Totalt pris: {order.totalPrice} kr
           </p>
         </div>
-      ) : (
-        <p>Ingen orderinformation tillgänglig.</p>
       )}
     </div>
   );

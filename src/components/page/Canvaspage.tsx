@@ -36,7 +36,7 @@ function CanvasPage() {
   if (loading) {
     return (
       <div>
-        <p>Loading...</p>
+        <p>Laddar...</p>
       </div>
     );
   }

@@ -92,7 +92,7 @@ function CostumerInformation() {
   return (
     <Form>
       {loading && (
-        <div style={{ color: "#333", marginBottom: 10 }}>
+        <div style={{ color: "oklch(45.5% 0.188 13.697)", marginBottom: 10 }}>
           <p>Vänta, du skickas vidare till betalning ...</p>
         </div>
       )}
