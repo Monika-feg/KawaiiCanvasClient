@@ -113,12 +113,23 @@ function CanvasPage() {
                       }
                     })()}
                   </Card.Text>
-                  <Button
-                    className="canvas-button"
-                    onClick={() => handleAddToCart(p.id)}
-                  >
-                    Lägg i varukorgen
-                  </Button>
+                  {(() => {
+                    const qty = liveStock
+                      ? liveStock.quantity
+                      : p.stockQuantity;
+                    if (qty > 0) {
+                      return (
+                        <Button
+                          className="canvas-button"
+                          onClick={() => handleAddToCart(p.id)}
+                        >
+                          Lägg i varukorgen
+                        </Button>
+                      );
+                    } else {
+                      return null;
+                    }
+                  })()}
                 </Card.Body>
               </Card>
             </Col>
