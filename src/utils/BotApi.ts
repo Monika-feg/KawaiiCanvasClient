@@ -3,6 +3,7 @@ import type { KawaiiResponse } from "./Interfaces";
 
 const API_URL = "http://localhost:8080";
 
+// Funktion för att hämta bot-svar från backend
 export async function fetchBot(prompt: string, systemPrompt:string) {
        try {
         const rep = await axios.post<KawaiiResponse<string>>(

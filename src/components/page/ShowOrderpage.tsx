@@ -8,6 +8,7 @@ function ShowOrderpage() {
   const [order, setOrder] = useState<Order | null>(null);
   const [, setStatus] = useState<string>("");
 
+  // denna useEffect hämtar betalningsstatus och orderdetaljer baserat på session_id i URL:en
   useEffect(() => {
     let sessionId = null;
     if (window.location.hash) {

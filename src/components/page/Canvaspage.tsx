@@ -10,12 +10,15 @@ import "../css/Canvas.css";
 import { fetchAddCanvasToCart, fetchGetCartById } from "../../utils/CartApi";
 import { getCartIdFromLocalstorage } from "../../utils/FromLocalstorage";
 import { useLiveUpdateStock } from "../../utils/LiveUpdateStock";
+import Snackbar from "@mui/material/Snackbar";
+import Alert from "@mui/material/Alert";
 
 function CanvasPage() {
   const [products, setProducts] = useState<Canvas[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const stock = useLiveUpdateStock();
+  const [showSuccess, setShowSuccess] = useState(false);
 
   // hämtar tavlor från backend och lagerstatus
   useEffect(() => {
@@ -62,27 +65,29 @@ function CanvasPage() {
       );
       const newQuantity = foundItem ? foundItem.numberOfCanvases + 1 : 1;
       await fetchAddCanvasToCart(cartId, canvasId, newQuantity);
-      alert("Tavla tillagd i kundvagnen!");
+      setShowSuccess(true);
+      console.log("Tavla tillagd i kundvagnen!");
     } catch (error) {
       console.error("Error adding canvas to cart:", error);
       alert("Kunde inte lägga till tavlan i kundvagnen.");
     }
   };
-  console.log("ALL STOCK:", stock);
+  // fick lite hjälp av copilot att få min logik att fungera med lagerstatus
   return (
     <Container>
+      <Snackbar
+        open={showSuccess}
+        autoHideDuration={2000}
+        onClose={() => setShowSuccess(false)}
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+      >
+        <Alert severity="success" sx={{ width: "100%" }}>
+          Tavlan har lagts till i kundvagnen!
+        </Alert>
+      </Snackbar>
       <Row>
         {products.map((p) => {
           const liveStock = stock.find((item) => item.itemId === p.id);
-          console.log(
-            "DEBUG:",
-            p.title,
-            "liveStock:",
-            liveStock,
-            "quantity:",
-            liveStock?.quantity,
-            typeof liveStock?.quantity
-          );
           return (
             <Col key={p.id} xs={12} sm={6} md={4}>
               <Card style={{ width: "18rem" }}>

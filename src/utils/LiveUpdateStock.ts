@@ -4,7 +4,7 @@ import { StompClient } from "./StompClient";
 import type { Inventory } from "./Interfaces";
 
 
-
+// Hook för att hantera live-uppdateringar av lagerstatus via WebSocket
 export function useLiveUpdateStock() {
     const [stock, setStock] = useState<Inventory[]>([]);
 

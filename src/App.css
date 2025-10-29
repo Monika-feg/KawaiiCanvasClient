@@ -1,4 +1,4 @@
-/* Fixed position for bot in bottom right corner */
+
 .bot-container {
   position: fixed;
   right: 2vw;
@@ -8,7 +8,7 @@
   flex-direction: column;
   align-items: flex-end;
 }
-/* Make the home page mushroom image smaller */
+
 .home-mushroom {
   width: 400px;
   height: auto;

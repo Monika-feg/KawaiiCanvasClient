@@ -18,6 +18,7 @@ import AboutUsPage from "./components/page/AbouUsPage";
 
 function App() {
   const [, setCart] = useState<Cart | null>(null);
+  // denna useEffect skapar en ny kundvagn vid appens start och sparar cartId i localstorage
   useEffect(() => {
     fetchNewCart()
       .then((cart) => {

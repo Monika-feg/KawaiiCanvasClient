@@ -1,3 +1,4 @@
+// Definierar TypeScript-gränssnitt för olika objekt som används i applikationen, dessa matchar API modellerna
 export interface Canvas {
   id: string;
   title: string;

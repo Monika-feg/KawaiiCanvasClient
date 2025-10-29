@@ -1,6 +1,8 @@
 import axios from "axios";
 import type { KawaiiResponse, Order, NewOrder } from "./Interfaces";
 
+// API endpoint för orders skapa ny order och hämta order via ID
+
 const ORDER_API =
     window.location.hostname === "localhost"
         ? "http://localhost:8080/api/orders"
