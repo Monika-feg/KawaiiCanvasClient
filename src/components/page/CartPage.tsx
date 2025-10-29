@@ -19,6 +19,7 @@ function CartPage() {
   const [error, setError] = useState<string | null>(null);
   const [totalPrice, setTotalPrice] = useState<number>(0);
 
+  // denna useEffect hämtar kundvagnens innehåll och hämtar cart ifrån localstorage
   useEffect(() => {
     const cartId = getCartIdFromLocalstorage();
     // Här kan du hämta kundvagnens innehåll
@@ -38,6 +39,7 @@ function CartPage() {
     }
   }, []);
 
+  // denna useEffect hämtar totalpriset för kundvagnen
   useEffect(() => {
     if (cart && cart.id) {
       fetchGetCartTotalPrice(cart.id)
@@ -51,6 +53,7 @@ function CartPage() {
     }
   }, [cart]);
 
+  // visar laddningsmeddelande eller felmeddelande
   if (loading) {
     return (
       <div>
@@ -67,6 +70,7 @@ function CartPage() {
     );
   }
 
+  // uppdaterar antal tavlor i kundvagnen
   const updateQuantity = async (canvasId: string, newQuantity: number) => {
     if (!cart || !cart.id) return;
     if (newQuantity < 1) return;
@@ -83,6 +87,7 @@ function CartPage() {
     }
   };
 
+  // tar bort en tavla ifrån kundvagnen
   const handleDelete = (canvasId: string) => {
     console.log("Klickar på delete knappen");
     fetchRemoveCanvasFromCart(cart!.id, canvasId)

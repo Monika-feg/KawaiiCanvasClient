@@ -11,11 +11,12 @@ function BotComponent() {
   const [messages, setMessages] = useState([
     {
       sender: "bot",
-      text: "Hej! Jag är Kawaii Bot, din virtuella assistent för allt som rör Kawaii Canvas. Hur kan jag hjälpa dig idag? Jag kan svara på frågor gällande leverans, betalning, retur och kontakt.",
+      text: "Hej! Jag är Jordgubbs Boten, din virtuella assistent för allt som rör Kawaii Canvas. Hur kan jag hjälpa dig idag? Jag kan svara på frågor gällande leverans, betalning, retur och kontakt.",
     },
   ]);
   const [showWelcome, setShowWelcome] = useState(false);
   const [showAutoWelcome, setShowAutoWelcome] = useState(false);
+
   // Visa välkomstbubbla automatiskt när sidan laddas
   useEffect(() => {
     setShowAutoWelcome(true);
@@ -27,7 +28,7 @@ function BotComponent() {
   // Ref for scrolling chat to bottom
   const chatEndRef = useRef<HTMLDivElement | null>(null);
 
-  // Scroll to bottom when messages change
+  // skrollar till botten av chatten när ett nytt meddelande läggs till
   useEffect(() => {
     if (showChat && chatEndRef.current) {
       chatEndRef.current.scrollIntoView({ behavior: "smooth" });
@@ -40,7 +41,8 @@ function BotComponent() {
     const inputLower = input.toLowerCase();
     setInput("");
 
-    // Fuzzy match med plural och böjningar
+    // Fuzzy match ifall man inte skriver exakt som det står i snabbsvaren
+    // fick lite hjälp av copilot här gällande logiken
     if (inputLower.match(/leverans(er|erna)?|levernans|levernas|levarans/)) {
       setMessages((prev) => [
         ...prev,

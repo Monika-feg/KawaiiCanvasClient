@@ -2,6 +2,7 @@
 import axios from "axios";
 import type { KawaiiResponse, Order,Payment} from "./Interfaces";
 
+// fetchar payment från backend skapa betalning och hämta betalningsstatus
 // Välj API-url automatiskt beroende på miljö
 const API_URL =
     window.location.hostname === "localhost"

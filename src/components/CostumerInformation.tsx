@@ -23,6 +23,7 @@ function CostumerInformation() {
   const [success, setSuccess] = useState("");
   const [, setPayment] = useState<Payment | null>(null);
 
+  // hanterar inlämning av kundinformation och skapar order och payment
   const handleCostumerInfo = async () => {
     console.log("Handling customer info submission");
     setError("");
@@ -64,6 +65,7 @@ function CostumerInformation() {
       customer,
     };
 
+    // Skapa order i backend med try catch
     try {
       const createdOrder = await fetchCreateOrder(newOrder, cartId);
       setOrderIdToLocalstorage(createdOrder.id);

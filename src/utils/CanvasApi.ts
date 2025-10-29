@@ -1,6 +1,7 @@
 import axios from "axios";
 import type { Canvas, KawaiiResponse } from "./Interfaces";
 
+// API endpoint för canvas hämta alla tavlor och hämta tavla via ID
 const CANVAS_API =
    window.location.hostname === "localhost"
    ?"http://localhost:8080/api/canvas"

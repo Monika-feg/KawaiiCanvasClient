@@ -11,6 +11,9 @@
   },
   "dependencies": {
     "@dnd-kit/modifiers": "^9.0.0",
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
+    "@mui/material": "^7.3.4",
     "@stomp/stompjs": "^7.2.1",
     "@tailwindcss/vite": "^4.1.15",
     "axios": "^1.12.2",

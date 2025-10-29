@@ -1,6 +1,7 @@
 import axios from "axios";
 import type { KawaiiResponse, Cart } from "./Interfaces";
 
+// API endpoint för cart
 const CART_API =
     window.location.hostname === "localhost"
         ? "http://localhost:8080/api/cart"
