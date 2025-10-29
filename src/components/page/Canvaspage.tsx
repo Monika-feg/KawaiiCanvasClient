@@ -68,12 +68,21 @@ function CanvasPage() {
       alert("Kunde inte lägga till tavlan i kundvagnen.");
     }
   };
-
+  console.log("ALL STOCK:", stock);
   return (
     <Container>
       <Row>
         {products.map((p) => {
           const liveStock = stock.find((item) => item.itemId === p.id);
+          console.log(
+            "DEBUG:",
+            p.title,
+            "liveStock:",
+            liveStock,
+            "quantity:",
+            liveStock?.quantity,
+            typeof liveStock?.quantity
+          );
           return (
             <Col key={p.id} xs={12} sm={6} md={4}>
               <Card style={{ width: "18rem" }}>
@@ -82,8 +91,22 @@ function CanvasPage() {
                   <Card.Title>{p.title}</Card.Title>
                   <Card.Text>{p.price}</Card.Text>
                   <Card.Text>
-                    Lagerstatus:{" "}
-                    {liveStock ? liveStock.quantity : p.stockQuantity}
+                    {(() => {
+                      const qty = liveStock
+                        ? liveStock.quantity
+                        : p.stockQuantity;
+                      if (qty === 0) {
+                        return <span className="stock-out">Slut i lager!</span>;
+                      } else if (qty > 0 && qty < 5) {
+                        return (
+                          <span className="blink stock-warning">
+                            Endast {qty} kvar!
+                          </span>
+                        );
+                      } else {
+                        return <>Lagerstatus: {qty}</>;
+                      }
+                    })()}
                   </Card.Text>
                   <Button
                     className="canvas-button"
