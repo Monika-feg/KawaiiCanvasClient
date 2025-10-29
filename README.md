@@ -1,73 +1,66 @@
-# React + TypeScript + Vite
+# KawaiiCanvasClient
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Detta är frontend-delen till KawaiiCanvas – en kawaii-inspirerad webbshop för tavlor! 🖼️✨
 
-Currently, two official plugins are available:
+## Backend
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Det finns ett tillhörande backend-repo: [KawaiiCanvasApi](https://github.com/Monika-feg/KawaiiCanvasApi)
 
-## React Compiler
+## Brancher och miljöer
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- Använd **main**-branchen i både backend- och frontend-repo för lokal utveckling och testning.
+- Använd **deploy**-branchen i både backend- och frontend-repo om du vill testa den deployade versionen.
 
-## Expanding the ESLint configuration
+Se till att Stripe-URL:er och API-anrop pekar rätt beroende på om du kör lokalt eller mot deployment.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Funktioner
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- Bläddra bland tavlor med bilder, pris och lagerstatus
+- Liveuppdatering av lager (WebSocket)
+- Varningar när lagret är lågt (”Endast X kvar!” blinkar)
+- Lägg till i varukorg och beställ
+- Betalning via Stripe
+- Chatbot med kawaii-personlighet och fuzzy matching
+- Responsiv och färgglad design
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## Teknologier
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+- React (TypeScript)
+- Vite
+- Bootstrap
+- Material UI
+- WebSocket
+- Stripe
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Kom igång
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+1. Klona repot:
+   ```bash
+   git clone https://github.com/Monika-feg/KawaiiCanvasClient.git
+   ```
+2. Gå till projektmappen:
+   ```bash
+   cd KawaiiCanvasClient/KawaiiCanvasClient
+   ```
+3. Installera beroenden:
+   ```bash
+   npm install
+   ```
+4. Starta utvecklingsservern:
+   ```bash
+   npm run dev
+   ```
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## Frontend-backend-integration
+
+- Starta backend-servern (se backend-repo).
+- Se till att API-anropen i frontend pekar mot rätt backend-url.
+- För betalning, se till att Stripe-URL:er i backend och frontend matchar.
+
+## Kontakt
+
+Byggd av Monika-feg. Kontakta mig gärna via GitHub!
+
+---
+
+_Projektet är ett hobby-/skolprojekt och inte en riktig butik._
