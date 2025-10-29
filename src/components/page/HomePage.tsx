@@ -4,10 +4,13 @@ const mushroomImage =
 function HomePage() {
   return (
     <div>
-      <h1>Välkommen till KawaiiCanvas!! 🎀</h1>
+      <header>
+        <h1>Välkommen till KawaiiCanvas!! 🎀</h1>
+      </header>
       <p>
-        Varning: Våra tavlor kan orsaka akut “awww”-syndrom, överdrivet leende
-        och behov av fler väggar 🐰💖
+        Välkommen till KawaiiCanvas – platsen där varje vägg förtjänar lite
+        kawaii-magi! ✨ Våra tavlor är skapade för att sprida leenden, färg och
+        ren glädje. Men varning… det är svårt att välja bara en! 🐻🎀
       </p>
       <img
         src={mushroomImage}

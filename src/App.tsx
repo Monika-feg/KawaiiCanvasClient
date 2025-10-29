@@ -14,6 +14,7 @@ import BotComponent from "./components/BotComponent";
 import { fetchNewCart } from "./utils/CartApi";
 import type { Cart } from "./utils/Interfaces";
 import { setCartIdToLocalstorage } from "./utils/FromLocalstorage";
+import AboutUsPage from "./components/page/AbouUsPage";
 
 function App() {
   const [, setCart] = useState<Cart | null>(null);
@@ -39,6 +40,7 @@ function App() {
               <Route path="/cart" element={<CartPage />} />
               <Route path="/order" element={<OrderPage />} />
               <Route path="/show-order" element={<ShowOrderpage />} />
+              <Route path="/aboutus" element={<AboutUsPage />} />
             </Routes>
           </div>
           <div>

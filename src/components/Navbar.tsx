@@ -16,6 +16,7 @@ function CustomNavbar() {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="navbar-nav-custom">
             <Nav.Link href="#canvas">Tavlor</Nav.Link>
+            <Nav.Link href="#aboutus">Om oss</Nav.Link>
             <Nav.Link href="#cart" className="cart-link">
               <span className="cart-emoji">🛒</span>
             </Nav.Link>
