@@ -1,6 +1,6 @@
 # KawaiiCanvasClient
 
-Detta är frontend-delen till KawaiiCanvas, en kawaii-inspirerad webbshop för tavlor! 🖼️✨
+Detta är frontend-delen till KawaiiCanvas, en kawaii inspirerad webbshop för tavlor! 🖼️✨
 
 ## Backend
 
