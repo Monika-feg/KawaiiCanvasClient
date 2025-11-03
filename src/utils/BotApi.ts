@@ -1,7 +1,9 @@
 import axios from "axios";
 import type { KawaiiResponse } from "./Interfaces";
 
-const API_URL = "http://localhost:8080";
+const API_URL =  window.location.hostname === "localhost"
+   ?"http://localhost:8080/api/canvas"
+   : "https://kawaiicanvasapi.onrender.com/api/canvas";
 
 // Funktion för att hämta bot-svar från backend
 export async function fetchBot(prompt: string, systemPrompt:string) {
